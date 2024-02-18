@@ -1,4 +1,4 @@
-import { Token, CurrencyAmount, WETH9 } from '@uniswap/sdk-core'
+import { Token, CurrencyAmount, WETH9 } from '@monoswap-labs/sdk-core'
 import { FeeAmount, TICK_SPACINGS } from '../constants'
 import { nearestUsableTick } from '../utils/nearestUsableTick'
 import { TickMath } from '../utils/tickMath'
@@ -12,6 +12,8 @@ const ONE_ETHER = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(18))
 describe('Pool', () => {
   const USDC = new Token(1, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'USDC', 'USD Coin')
   const DAI = new Token(1, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18, 'DAI', 'DAI Stablecoin')
+  const WETH_BLAST_SEPOLIA = new Token(168587773, '0x4200000000000000000000000000000000000023', 18, 'WETH', 'Wrapped Ether')
+  const USDC_BLAST_SEPOLIA = new Token(168587773, '0xda9C093a7D9e41d21Dc9A7ff5601A3FD02111d95', 6, 'tUSDC', 'Test USDC')
 
   describe('constructor', () => {
     it('cannot be used for tokens on different chains', () => {
@@ -64,10 +66,17 @@ describe('Pool', () => {
     })
   })
 
-  describe('#getAddress', () => {
+  describe('#getAddress1', () => {
     it('matches an example', () => {
       const result = Pool.getAddress(USDC, DAI, FeeAmount.LOW)
       expect(result).toEqual('0x6c6Bc977E13Df9b0de53b251522280BB72383700')
+    })
+  })
+
+  describe('#getAddress2', () => {
+    it('matches an example', () => {
+      const result = Pool.getAddress(WETH_BLAST_SEPOLIA, USDC_BLAST_SEPOLIA, FeeAmount.LOW)
+      expect(result).toEqual('0xA0ec42137bf607012BcEE4dad44234B52436325c')
     })
   })
 

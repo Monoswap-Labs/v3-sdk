@@ -1,7 +1,12 @@
-import { BigintIsh, CurrencyAmount, Price, Token } from '@uniswap/sdk-core'
+import {BigintIsh, ChainId, CurrencyAmount, Price, Token} from '@monoswap-labs/sdk-core'
 import JSBI from 'jsbi'
 import invariant from 'tiny-invariant'
-import { FACTORY_ADDRESS, FeeAmount, TICK_SPACINGS } from '../constants'
+import {
+  FACTORY_ADDRESS,
+  FACTORY_ADDRESS2,
+  FeeAmount,
+  TICK_SPACINGS
+} from '../constants'
 import { NEGATIVE_ONE, ONE, Q192, ZERO } from '../internalConstants'
 import { computePoolAddress } from '../utils/computePoolAddress'
 import { LiquidityMath } from '../utils/liquidityMath'
@@ -48,8 +53,9 @@ export class Pool {
     initCodeHashManualOverride?: string,
     factoryAddressOverride?: string
   ): string {
+    const factoryAddress = tokenA.chainId == ChainId.BLAST_SEPOLIA ? FACTORY_ADDRESS2 : FACTORY_ADDRESS
     return computePoolAddress({
-      factoryAddress: factoryAddressOverride ?? FACTORY_ADDRESS,
+      factoryAddress: factoryAddressOverride ?? factoryAddress,
       fee,
       tokenA,
       tokenB,
