@@ -3,7 +3,7 @@ import JSBI from 'jsbi'
 import invariant from 'tiny-invariant'
 import {
   FACTORY_ADDRESS,
-  FACTORY_ADDRESS2,
+  FACTORY_ADDRESS_BLAST,
   FeeAmount,
   TICK_SPACINGS
 } from '../constants'
@@ -53,7 +53,7 @@ export class Pool {
     initCodeHashManualOverride?: string,
     factoryAddressOverride?: string
   ): string {
-    const factoryAddress = tokenA.chainId == ChainId.BLAST_SEPOLIA ? FACTORY_ADDRESS2 : FACTORY_ADDRESS
+    const factoryAddress = tokenA.chainId == ChainId.BLAST ? FACTORY_ADDRESS_BLAST : FACTORY_ADDRESS
     return computePoolAddress({
       factoryAddress: factoryAddressOverride ?? factoryAddress,
       fee,

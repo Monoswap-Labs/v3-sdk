@@ -2,7 +2,7 @@ import { defaultAbiCoder } from '@ethersproject/abi'
 import { getCreate2Address } from '@ethersproject/address'
 import { keccak256 } from '@ethersproject/solidity'
 import { ChainId, Token } from '@monoswap-labs/sdk-core'
-import { FeeAmount, POOL_INIT_CODE_HASH, POOL_INIT_CODE_HASH2 } from '../constants'
+import {FeeAmount, POOL_INIT_CODE_HASH, POOL_INIT_CODE_HASH_BLAST} from '../constants'
 
 /**
  * Computes a pool address
@@ -27,7 +27,7 @@ export function computePoolAddress({
   initCodeHashManualOverride?: string
 }): string {
   const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA] // does safety checks
-  const poolInitCodeHash = tokenA.chainId == ChainId.BLAST_SEPOLIA ? POOL_INIT_CODE_HASH2 : POOL_INIT_CODE_HASH
+  const poolInitCodeHash = tokenA.chainId == ChainId.BLAST ? POOL_INIT_CODE_HASH_BLAST : POOL_INIT_CODE_HASH
   return getCreate2Address(
     factoryAddress,
     keccak256(
